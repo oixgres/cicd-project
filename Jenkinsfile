@@ -9,7 +9,7 @@ pipeline{
                 sh """#!/bin/bash
                 echo "Building branch: $env.GIT_BRANCH"
 
-                docker buildx build --network=host --platform=linux/amd64 --tag="533267333644.dkr.ecr.us-east-1.amazonaws.com/test"
+                docker buildx build --platform=linux/amd64 --tag="533267333644.dkr.ecr.us-east-1.amazonaws.com/test"
                 """
             }
         }
