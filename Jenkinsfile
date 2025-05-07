@@ -7,7 +7,7 @@ pipeline{
                 spec:
                   containers:
                   - name: docker
-                    image: docker: latest
+                    image: docker:latest
                     command:
                     - cat
                     tty: true
@@ -24,20 +24,24 @@ pipeline{
     stages{
         stage('Build'){
             steps{
-                sh """#!/bin/bash
-                echo "Building branch: $env.GIT_BRANCH"
+                container ('docker')  {
+                    sh """#!/bin/bash
+                    echo "Building branch: $env.GIT_BRANCH"
 
-                docker -v
-                docker buildx build --network=host --platform=linux/amd64 --tag="533267333644.dkr.ecr.us-east-1.amazonaws.com/test" -f Dockerfile .
-                """
+                    docker -v
+                    docker buildx build --network=host --platform=linux/amd64 --tag="533267333644.dkr.ecr.us-east-1.amazonaws.com/test" -f Dockerfile .
+                    """
+                }
             }
         }
         stage('Publish'){
             steps{
-                sh """#!/bin/bash
-                aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 533267333644.dkr.ecr.us-east-1.amazonaws.com
-                docker push "533267333644.dkr.ecr.us-east-1.amazonaws.com/test"
-                """
+                container ('docker')  {
+                    sh """#!/bin/bash
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 533267333644.dkr.ecr.us-east-1.amazonaws.com
+                    docker push "533267333644.dkr.ecr.us-east-1.amazonaws.com/test"
+                    """
+                }
             }
         }
     }
