@@ -29,6 +29,8 @@ pipeline{
         stage('Publish'){
             steps{
                 container ('docker')  {
+                    sh 'apt-get update'
+                    sh 'apt-get aws-cli'
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125306454.dkr.ecr.us-east-1.amazonaws.com'
                     sh 'docker push "211125306454.dkr.ecr.us-east-1.amazonaws.com/test"'
                     
