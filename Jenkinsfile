@@ -25,12 +25,7 @@ pipeline{
         stage('Build'){
             steps{
                 container ('docker')  {
-                    sh """#!/bin/bash
-                    echo "Building branch: $env.GIT_BRANCH"
-
-                    docker -v
-                    docker buildx build --network=host --platform=linux/amd64 --tag="533267333644.dkr.ecr.us-east-1.amazonaws.com/test" -f Dockerfile .
-                    """
+                    sh 'docker buildx build --network=host --platform=linux/amd64 --tag="533267333644.dkr.ecr.us-east-1.amazonaws.com/test" -f Dockerfile .'
                 }
             }
         }
