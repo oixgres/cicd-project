@@ -1,6 +1,6 @@
 FROM python:3.9-slim-buster
 
-ENV PYTHONBUFFERED=1
+ENV PYTHONBUFFERED=0
 
 RUN apt-get update && apt-get upgrade -y
 
