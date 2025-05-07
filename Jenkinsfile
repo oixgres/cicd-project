@@ -25,6 +25,8 @@ pipeline{
         stage('Build'){
             steps{
                 container ('docker')  {
+                    sh 'dockerd & > /dev/null'
+                    sleep(time: 10, unit: "SECONDS")
                     sh 'docker buildx build --network=host --platform=linux/amd64 --tag="533267333644.dkr.ecr.us-east-1.amazonaws.com/test" -f Dockerfile .'
                 }
             }
