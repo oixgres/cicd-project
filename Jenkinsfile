@@ -16,7 +16,7 @@ pipeline{
         }
         stage("Deploy"){
             steps{
-                sh 'kubectl rollout restart deployment test'
+                sh 'kubectl rollout restart deployment test -n default'
             }
         }
     }
